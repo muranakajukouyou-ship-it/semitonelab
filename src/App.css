@@ -1,0 +1,488 @@
+/* ============================================================
+   半音ラボ — スタイル v2
+   深い紫紺の夜色に、ゴールドと象牙色。
+   鍵盤は「楽器」として見える質感を目指す
+   ============================================================ */
+
+:root {
+  --bg: #100e16;
+  --panel: #1d1a29;
+  --panel-border: #3a3450;
+  --text: #f2ecdc;
+  --muted: #a79fc0;
+  --accent: #d4af6a;
+  --accent-hi: #f0d79a;
+  --accent-dark: #8a6d35;
+  --good: #8fd694;
+  --semi: #f0b95e;
+  --bad: #e07856;
+  --target: #7cc3e8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+    'Noto Sans JP', 'Yu Gothic', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  /* 上部にほんのり金色の光、下は深く沈む */
+  background:
+    radial-gradient(ellipse 80% 45% at 50% -5%, rgba(212, 175, 106, 0.16), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 85% 110%, rgba(90, 70, 160, 0.14), transparent 70%),
+    var(--bg);
+}
+
+.app {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 40px 16px 56px;
+}
+
+/* ---------- ヘッダー ---------- */
+.app-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em;
+  background: linear-gradient(180deg, var(--accent-hi), var(--accent) 55%, var(--accent-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* タイトルの上下の飾り罫 */
+.app-header h1::before,
+.app-header h1::after {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 1px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent, var(--accent-dark), transparent);
+}
+.app-header h1::before {
+  margin-bottom: 16px;
+}
+.app-header h1::after {
+  margin-top: 16px;
+}
+
+.app-subtitle {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+/* ---------- モード切替タブ ---------- */
+.mode-tabs {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--muted);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tab:hover {
+  color: var(--text);
+  border-color: var(--accent-dark);
+  transform: translateY(-1px);
+}
+
+.tab.active {
+  background: linear-gradient(180deg, var(--accent-hi), var(--accent));
+  border-color: var(--accent);
+  color: #1a1608;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(212, 175, 106, 0.35);
+}
+
+/* ---------- パネル ---------- */
+.panel {
+  background: linear-gradient(180deg, #221e31, var(--panel));
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 28px 22px 32px;
+  text-align: center;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+}
+
+.panel-desc {
+  margin: 0 auto 22px;
+  max-width: 30em;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.8;
+}
+
+/* ---------- ボタン ---------- */
+.primary-btn {
+  padding: 13px 30px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--accent-hi), var(--accent));
+  color: #1a1608;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(212, 175, 106, 0.3);
+  transition: transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.primary-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(212, 175, 106, 0.4);
+}
+
+.primary-btn:active {
+  transform: scale(0.97);
+}
+
+.ghost-btn {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ghost-btn:hover {
+  color: var(--text);
+  border-color: var(--accent-dark);
+}
+
+.choice-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 18px 0 6px;
+}
+
+.choice-btn {
+  padding: 13px 22px;
+  border-radius: 12px;
+  border: 1px solid var(--panel-border);
+  background: #2a2640;
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.choice-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent-hi);
+  transform: translateY(-1px);
+}
+
+.choice-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ---------- ステータス／フィードバック ---------- */
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.feedback {
+  min-height: 1.6em;
+  margin: 18px 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.feedback.show {
+  opacity: 1;
+}
+
+.feedback.tone-good {
+  color: var(--good);
+}
+.feedback.tone-semi {
+  color: var(--semi);
+}
+.feedback.tone-bad {
+  color: var(--bad);
+}
+
+/* ============================================================
+   鍵盤
+   ============================================================ */
+.piano {
+  position: relative;
+  display: flex;
+  height: 190px;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 14px 0 10px;
+  background: linear-gradient(180deg, #2b2135, #1a1424);
+  border: 1px solid #0a0810;
+  border-radius: 12px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 28px rgba(0, 0, 0, 0.5);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* 鍵盤上部のフェルト帯（赤いラインがピアノらしさ） */
+.piano::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 10px;
+  right: 10px;
+  height: 5px;
+  background: #8e2f38;
+  border-radius: 2px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.white-key {
+  flex: 1;
+  position: relative;
+  margin-top: 8px;
+  background: linear-gradient(180deg, #efe9d8 0%, #fdfbf3 12%, #fdfbf3 82%, #e3dac2 100%);
+  border: 1px solid #a89e83;
+  border-top: none;
+  border-radius: 0 0 7px 7px;
+  box-shadow:
+    inset -2px 0 3px rgba(0, 0, 0, 0.08),
+    0 4px 6px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.08s ease;
+}
+
+.white-key:hover {
+  background: linear-gradient(180deg, #f5efdd 0%, #fffdf6 12%, #fffdf6 82%, #eae0c8 100%);
+}
+
+.white-key:active {
+  background: linear-gradient(180deg, #e8e0c8, #f1ead6);
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+.white-key .key-label {
+  position: absolute;
+  bottom: 9px;
+  left: 0;
+  right: 0;
+  font-size: 0.82rem;
+  color: #8a8069;
+  pointer-events: none;
+}
+
+.black-key {
+  position: absolute;
+  top: 22px;
+  width: 7.6%;
+  height: 56%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #4a4557 0%, #211d2c 18%, #100d18 85%, #2c2739 100%);
+  border: 1px solid #000;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  box-shadow:
+    inset 0 -4px 5px rgba(255, 255, 255, 0.12),
+    0 6px 8px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  z-index: 2;
+  padding: 0;
+}
+
+.black-key:hover {
+  background: linear-gradient(180deg, #5a5470 0%, #2a2538 18%, #17131f 85%, #38324a 100%);
+}
+
+.black-key:active {
+  background: linear-gradient(180deg, #332e44, #191423);
+}
+
+.piano button:disabled {
+  cursor: default;
+}
+
+/* 回答後の色付け（白鍵・黒鍵共通） */
+.white-key.mark-target {
+  background: linear-gradient(180deg, #a8d4ee, #7cc3e8 60%, #5ea8d2);
+}
+.black-key.mark-target {
+  background: linear-gradient(180deg, #7cc3e8, #4a97c4);
+}
+.white-key.mark-wrong {
+  background: linear-gradient(180deg, #f0a58c, #e07856 60%, #c95f3f);
+}
+.black-key.mark-wrong {
+  background: linear-gradient(180deg, #e07856, #b44f30);
+}
+.white-key.mark-target .key-label {
+  color: #0d2735;
+  font-weight: 700;
+}
+.white-key.mark-wrong .key-label {
+  color: #4a1503;
+  font-weight: 700;
+}
+
+/* ---------- 結果 ---------- */
+.result-score {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 10px 0;
+}
+
+.result-semi {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- 頭の中チェック ---------- */
+.inner-target {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px auto 22px;
+  padding: 20px;
+  max-width: 320px;
+  border: 1px dashed var(--accent-dark);
+  border-radius: 14px;
+  background: rgba(212, 175, 106, 0.05);
+}
+
+.inner-target-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.18em;
+}
+
+.inner-target-note {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.inner-stats {
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid var(--panel-border);
+}
+
+.inner-stats h3 {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.stat-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 4px;
+  background: #2a2640;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+}
+
+.stat-num {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.tendency {
+  margin: 18px auto 12px;
+  max-width: 30em;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+/* ---------- フッター ---------- */
+.app-footer {
+  margin-top: 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.8;
+}
+
+/* ---------- スマホ調整 ---------- */
+@media (max-width: 480px) {
+  .app-header h1 {
+    font-size: 1.9rem;
+  }
+  .piano {
+    height: 160px;
+    padding: 12px 0 8px;
+  }
+  .piano::before {
+    top: 12px;
+  }
+  .black-key {
+    top: 20px;
+  }
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

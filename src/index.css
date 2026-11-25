@@ -1,0 +1,675 @@
+/* ============================================================
+   半音ラボ — スタイル v4（Marshall風アンプデザイン）
+   黒のトーレックス地 × 金のパネル × 白い筆記体ロゴ。
+   スピーカー部分はグリルクロスの編み目、つまみは黒×金。
+   ============================================================ */
+
+   @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
+
+   :root {
+     --bg: #0b0a08;
+     --panel: #16130e;
+     --panel-border: #4a3a14;
+     --text: #f2ecdc;
+     --muted: #b3a888;
+     --gold: #c9a227;
+     --gold-hi: #eed488;
+     --gold-dark: #7a5f14;
+     --gold-text: #e8cf8f;
+     --good: #8fd694;
+     --semi: #f0b95e;
+     --bad: #e07856;
+     --target: #7cc3e8;
+     --lamp: #ff3b30;
+   }
+   
+   * {
+     box-sizing: border-box;
+     -webkit-tap-highlight-color: transparent;
+   }
+   
+   html {
+     -webkit-text-size-adjust: 100%;
+   }
+   
+   body {
+     margin: 0;
+     min-height: 100vh;
+     min-height: 100dvh;
+     color: var(--text);
+     font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+       'Noto Sans JP', 'Yu Gothic', sans-serif;
+     -webkit-font-smoothing: antialiased;
+     overflow-x: hidden;
+     /* トーレックス（革シボ）風の地：細かいドット＋周辺を落とす */
+     background-color: var(--bg);
+     background-image:
+       radial-gradient(ellipse 90% 50% at 50% -5%, rgba(201, 162, 39, 0.13), transparent 70%),
+       radial-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1.5px),
+       radial-gradient(rgba(0, 0, 0, 0.5) 1px, transparent 1.5px);
+     background-size:
+       100% 100%,
+       5px 5px,
+       5px 5px;
+     background-position:
+       0 0,
+       0 0,
+       2px 3px;
+   }
+   
+   button {
+     touch-action: manipulation;
+     font-family: inherit;
+   }
+   
+   button:focus-visible {
+     outline: 2px solid var(--gold);
+     outline-offset: 2px;
+   }
+   
+   ::selection {
+     background: rgba(201, 162, 39, 0.4);
+   }
+   
+   .app {
+     max-width: 660px;
+     margin: 0 auto;
+     padding: 36px 16px 56px;
+   }
+   
+   /* ---------- ヘッダー（アンプのフロント） ---------- */
+   .app-header {
+     text-align: center;
+     margin-bottom: 26px;
+   }
+   
+   /* Marshall風・白の筆記体ロゴ */
+   .logo-script {
+     font-family: 'Pinyon Script', 'Brush Script MT', 'Segoe Script', cursive;
+     font-size: 3.4rem;
+     line-height: 1.1;
+     color: #fff;
+     text-shadow:
+       0 2px 10px rgba(0, 0, 0, 0.8),
+       0 0 26px rgba(255, 255, 255, 0.14);
+     transform: rotate(-2deg);
+   }
+   
+   .app-header h1 {
+     margin: 8px 0 0;
+     font-size: 1.15rem;
+     font-weight: 700;
+     letter-spacing: 0.55em;
+     text-indent: 0.55em;
+     color: var(--gold-text);
+   }
+   
+   .app-subtitle {
+     margin: 12px 0 0;
+     color: var(--muted);
+     font-size: 0.88rem;
+     letter-spacing: 0.05em;
+     line-height: 1.7;
+   }
+   
+   /* ---------- モード切替（金のパネル＋黒いつまみ） ---------- */
+   .mode-tabs {
+     display: flex;
+     gap: 10px;
+     justify-content: center;
+     margin-bottom: 22px;
+     padding: 12px;
+     border-radius: 10px;
+     /* つや消し金のフェイスプレート（横方向のヘアライン） */
+     background:
+       repeating-linear-gradient(
+         90deg,
+         rgba(255, 255, 255, 0.05) 0 1px,
+         transparent 1px 3px
+       ),
+       linear-gradient(180deg, #d9b545, #b8912a 55%, #96741c);
+     box-shadow:
+       inset 0 1px 0 rgba(255, 255, 255, 0.5),
+       inset 0 -2px 4px rgba(0, 0, 0, 0.35),
+       0 8px 20px rgba(0, 0, 0, 0.5);
+   }
+   
+   .tab {
+     position: relative;
+     flex: 1;
+     max-width: 180px;
+     padding: 11px 8px 11px 20px; /* 左はランプの分 */
+     border-radius: 8px;
+     border: 1px solid #000;
+     background: linear-gradient(180deg, #2e2a24, #14110c);
+     color: var(--gold-text);
+     font-size: 0.95rem;
+     cursor: pointer;
+     box-shadow:
+       inset 0 1px 0 rgba(255, 255, 255, 0.14),
+       0 3px 6px rgba(0, 0, 0, 0.4);
+     transition: all 0.15s ease;
+   }
+   
+   .tab:hover {
+     color: #fff;
+   }
+   
+   /* パイロットランプ（電源ランプ） */
+   .tab::before {
+     content: '';
+     position: absolute;
+     left: 10px;
+     top: 50%;
+     transform: translateY(-50%);
+     width: 7px;
+     height: 7px;
+     border-radius: 50%;
+     background: #4a4238;
+     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.7);
+     transition: all 0.15s ease;
+   }
+   
+   .tab.active {
+     color: #fff;
+     font-weight: 700;
+   }
+   
+   .tab.active::before {
+     background: var(--lamp);
+     box-shadow:
+       0 0 8px 2px rgba(255, 59, 48, 0.55),
+       inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+   }
+   
+   /* ---------- パネル（キャビネット） ---------- */
+   .panel {
+     background: linear-gradient(180deg, #1b1712, var(--panel));
+     border: 1px solid var(--gold-dark);
+     outline: 1px solid #000;
+     outline-offset: -4px;
+     border-radius: 14px;
+     padding: 28px 22px 32px;
+     text-align: center;
+     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+   }
+   
+   .panel h2 {
+     margin: 0 0 8px;
+     font-size: 1.3rem;
+     letter-spacing: 0.12em;
+     color: var(--gold-text);
+   }
+   
+   .panel-desc {
+     margin: 0 auto 22px;
+     max-width: 30em;
+     color: var(--muted);
+     font-size: 0.88rem;
+     line-height: 1.8;
+   }
+   
+   /* ---------- ボタン ---------- */
+   .primary-btn {
+     padding: 12px 38px;
+     border: 1px solid #5e4a10;
+     border-radius: 8px;
+     background: linear-gradient(180deg, var(--gold-hi), var(--gold) 60%, #a8821c);
+     color: #191204;
+     font-size: 1rem;
+     font-weight: 700;
+     letter-spacing: 0.08em;
+     cursor: pointer;
+     box-shadow:
+       inset 0 1px 0 rgba(255, 255, 255, 0.6),
+       0 5px 14px rgba(0, 0, 0, 0.5);
+     transition: transform 0.1s ease, filter 0.15s ease;
+   }
+   
+   .primary-btn:hover {
+     filter: brightness(1.06);
+   }
+   
+   .primary-btn:active {
+     transform: translateY(1px);
+   }
+   
+   .ghost-btn {
+     padding: 8px 14px;
+     border-radius: 999px;
+     border: 1px solid #57503e;
+     background: transparent;
+     color: var(--muted);
+     font-size: 0.85rem;
+     cursor: pointer;
+     transition: all 0.15s ease;
+   }
+   
+   .ghost-btn:hover {
+     color: var(--gold-text);
+     border-color: var(--gold-dark);
+   }
+   
+   .choice-row {
+     display: flex;
+     gap: 10px;
+     justify-content: center;
+     flex-wrap: wrap;
+     margin: 18px 0 6px;
+   }
+   
+   .choice-btn {
+     flex: 1 1 auto;
+     max-width: 200px;
+     padding: 14px 18px;
+     border-radius: 10px;
+     border: 1px solid #000;
+     background: linear-gradient(180deg, #2e2a24, #171410);
+     color: var(--text);
+     font-size: 1rem;
+     cursor: pointer;
+     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+     transition: all 0.15s ease;
+   }
+   
+   .choice-btn:hover:not(:disabled) {
+     border-color: var(--gold-dark);
+     color: var(--gold-hi);
+   }
+   
+   .choice-btn:disabled {
+     opacity: 0.45;
+     cursor: default;
+   }
+   
+   /* ---------- ステータス／フィードバック ---------- */
+   .status-row {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 10px 16px;
+     flex-wrap: wrap;
+     margin-bottom: 20px;
+     color: var(--muted);
+     font-size: 0.9rem;
+   }
+   
+   .feedback {
+     min-height: 1.6em;
+     margin: 18px 0;
+     font-size: 1.05rem;
+     font-weight: 600;
+     line-height: 1.6;
+     opacity: 0;
+     transition: opacity 0.2s ease;
+   }
+   
+   .feedback.show {
+     opacity: 1;
+   }
+   
+   .feedback.tone-good {
+     color: var(--good);
+   }
+   .feedback.tone-semi {
+     color: var(--semi);
+   }
+   .feedback.tone-bad {
+     color: var(--bad);
+   }
+   
+   /* ============================================================
+      鍵盤（グリルクロスの台座＋金の縁取り）
+      ============================================================ */
+   .piano {
+     position: relative;
+     display: flex;
+     height: 190px;
+     max-width: 540px;
+     margin: 0 auto;
+     padding: 14px 0 10px;
+     /* グリルクロス風の編み目 */
+     background:
+       repeating-linear-gradient(
+         45deg,
+         rgba(255, 255, 255, 0.035) 0 2px,
+         transparent 2px 5px
+       ),
+       repeating-linear-gradient(
+         -45deg,
+         rgba(0, 0, 0, 0.35) 0 2px,
+         transparent 2px 5px
+       ),
+       linear-gradient(180deg, #2a2118, #171208);
+     border: 2px solid #a8821c;
+     border-radius: 10px;
+     box-shadow:
+       inset 0 0 0 2px #0a0805,
+       0 12px 28px rgba(0, 0, 0, 0.55);
+     user-select: none;
+     -webkit-user-select: none;
+     touch-action: manipulation;
+   }
+   
+   /* 鍵盤上部のフェルト帯 */
+   .piano::before {
+     content: '';
+     position: absolute;
+     top: 14px;
+     left: 10px;
+     right: 10px;
+     height: 5px;
+     background: #8e2f38;
+     border-radius: 2px;
+     z-index: 3;
+     pointer-events: none;
+   }
+   
+   .white-key {
+     flex: 1;
+     position: relative;
+     margin-top: 8px;
+     min-width: 0;
+     background: linear-gradient(180deg, #efe9d8 0%, #fdfbf3 12%, #fdfbf3 82%, #e3dac2 100%);
+     border: 1px solid #a89e83;
+     border-top: none;
+     border-radius: 0 0 7px 7px;
+     box-shadow:
+       inset -2px 0 3px rgba(0, 0, 0, 0.08),
+       0 4px 6px rgba(0, 0, 0, 0.35);
+     cursor: pointer;
+     padding: 0;
+     transition: background 0.08s ease;
+   }
+   
+   .white-key:hover {
+     background: linear-gradient(180deg, #f5efdd 0%, #fffdf6 12%, #fffdf6 82%, #eae0c8 100%);
+   }
+   
+   .white-key:active {
+     background: linear-gradient(180deg, #e8e0c8, #f1ead6);
+     box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.18);
+   }
+   
+   .white-key .key-label {
+     position: absolute;
+     bottom: 9px;
+     left: 0;
+     right: 0;
+     font-size: 0.82rem;
+     color: #8a8069;
+     pointer-events: none;
+   }
+   
+   .black-key {
+     position: absolute;
+     top: 22px;
+     width: 7.6%;
+     height: 56%;
+     transform: translateX(-50%);
+     background: linear-gradient(180deg, #4a4557 0%, #211d2c 18%, #100d18 85%, #2c2739 100%);
+     border: 1px solid #000;
+     border-top: none;
+     border-radius: 0 0 6px 6px;
+     box-shadow:
+       inset 0 -4px 5px rgba(255, 255, 255, 0.12),
+       0 6px 8px rgba(0, 0, 0, 0.55);
+     cursor: pointer;
+     z-index: 2;
+     padding: 0;
+   }
+   
+   .black-key:hover {
+     background: linear-gradient(180deg, #5a5470 0%, #2a2538 18%, #17131f 85%, #38324a 100%);
+   }
+   
+   .black-key:active {
+     background: linear-gradient(180deg, #332e44, #191423);
+   }
+   
+   .piano button:disabled {
+     cursor: default;
+   }
+   
+   /* 回答後の色付け（白鍵・黒鍵共通） */
+   .white-key.mark-target {
+     background: linear-gradient(180deg, #a8d4ee, #7cc3e8 60%, #5ea8d2);
+   }
+   .black-key.mark-target {
+     background: linear-gradient(180deg, #7cc3e8, #4a97c4);
+   }
+   .white-key.mark-wrong {
+     background: linear-gradient(180deg, #f0a58c, #e07856 60%, #c95f3f);
+   }
+   .black-key.mark-wrong {
+     background: linear-gradient(180deg, #e07856, #b44f30);
+   }
+   .white-key.mark-target .key-label {
+     color: #0d2735;
+     font-weight: 700;
+   }
+   .white-key.mark-wrong .key-label {
+     color: #4a1503;
+     font-weight: 700;
+   }
+   
+   /* ---------- 結果 ---------- */
+   .result-score {
+     font-size: 1.6rem;
+     font-weight: 700;
+     color: var(--gold-hi);
+     margin: 10px 0;
+   }
+   
+   .result-semi {
+     color: var(--muted);
+     font-size: 0.9rem;
+   }
+   
+   /* ---------- 頭の中チェック ---------- */
+   .inner-target {
+     display: flex;
+     flex-direction: column;
+     gap: 4px;
+     margin: 4px auto 22px;
+     padding: 20px;
+     max-width: 320px;
+     border: 1px dashed var(--gold-dark);
+     border-radius: 12px;
+     background: rgba(201, 162, 39, 0.06);
+   }
+   
+   .inner-target-label {
+     font-size: 0.8rem;
+     color: var(--muted);
+     letter-spacing: 0.18em;
+   }
+   
+   .inner-target-note {
+     font-size: 1.9rem;
+     font-weight: 700;
+     color: var(--gold-hi);
+   }
+   
+   .inner-stats {
+     margin-top: 30px;
+     padding-top: 22px;
+     border-top: 1px solid #3a3222;
+   }
+   
+   .inner-stats h3 {
+     margin: 0 0 14px;
+     font-size: 0.95rem;
+     color: var(--muted);
+     font-weight: 600;
+   }
+   
+   .stat-grid {
+     display: grid;
+     grid-template-columns: repeat(4, 1fr);
+     gap: 8px;
+     max-width: 460px;
+     margin: 0 auto;
+   }
+   
+   .stat-grid > div {
+     display: flex;
+     flex-direction: column;
+     gap: 2px;
+     padding: 12px 4px;
+     background: #221d15;
+     border: 1px solid rgba(201, 162, 39, 0.18);
+     border-radius: 10px;
+   }
+   
+   .stat-num {
+     font-size: 1.45rem;
+     font-weight: 700;
+     color: var(--gold-hi);
+   }
+   
+   .stat-label {
+     font-size: 0.72rem;
+     color: var(--muted);
+   }
+   
+   .tendency {
+     margin: 18px auto 12px;
+     max-width: 30em;
+     font-size: 0.92rem;
+     line-height: 1.8;
+   }
+   
+   /* ---------- フッター ---------- */
+   .app-footer {
+     margin-top: 24px;
+     text-align: center;
+     color: #8a7f63;
+     font-size: 0.78rem;
+     line-height: 1.8;
+   }
+   
+   /* ============================================================
+      スマホ（〜600px）
+      ============================================================ */
+   @media (max-width: 600px) {
+     .app {
+       padding: 26px 12px 40px;
+     }
+   
+     .app-header {
+       margin-bottom: 20px;
+     }
+   
+     .logo-script {
+       font-size: 2.5rem;
+     }
+   
+     .app-header h1 {
+       font-size: 1rem;
+       letter-spacing: 0.45em;
+       text-indent: 0.45em;
+     }
+   
+     .app-subtitle {
+       font-size: 0.82rem;
+     }
+   
+     .mode-tabs {
+       gap: 7px;
+       padding: 9px;
+       margin-bottom: 16px;
+     }
+   
+     .tab {
+       font-size: 0.84rem;
+       padding: 10px 4px 10px 16px;
+     }
+   
+     .tab::before {
+       left: 7px;
+       width: 6px;
+       height: 6px;
+     }
+   
+     .panel {
+       padding: 22px 14px 26px;
+       border-radius: 12px;
+     }
+   
+     .panel h2 {
+       font-size: 1.15rem;
+     }
+   
+     .panel-desc {
+       font-size: 0.84rem;
+       margin-bottom: 18px;
+     }
+   
+     .primary-btn {
+       padding: 12px 30px;
+     }
+   
+     .choice-row {
+       gap: 8px;
+     }
+   
+     .choice-btn {
+       padding: 14px 10px;
+       font-size: 0.95rem;
+     }
+   
+     .status-row {
+       font-size: 0.84rem;
+       margin-bottom: 16px;
+     }
+   
+     .feedback {
+       font-size: 0.98rem;
+     }
+   
+     .piano {
+       height: 168px;
+       padding: 12px 0 8px;
+     }
+   
+     .piano::before {
+       top: 12px;
+       left: 6px;
+       right: 6px;
+     }
+   
+     .black-key {
+       top: 20px;
+       width: 8.4%;
+     }
+   
+     .white-key .key-label {
+       font-size: 0.74rem;
+       bottom: 7px;
+     }
+   
+     .inner-target {
+       padding: 16px;
+     }
+   
+     .inner-target-note {
+       font-size: 1.6rem;
+     }
+   
+     .stat-grid {
+       grid-template-columns: repeat(2, 1fr);
+     }
+   
+     .result-score {
+       font-size: 1.4rem;
+     }
+   }
+   
+   /* 横向き・低丈の画面では鍵盤を少し低く */
+   @media (max-height: 480px) and (orientation: landscape) {
+     .piano {
+       height: 130px;
+     }
+   }
+   
